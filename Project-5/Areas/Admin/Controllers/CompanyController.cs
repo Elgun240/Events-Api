@@ -54,13 +54,15 @@ namespace Project_5.Areas.Admin.Controllers
             {
                 return StatusCode(StatusCodes.Status404NotFound, new Response { Status = "Error", Message = "Cant find company with this id" });
             }
+            var existcompany = await _db.Companies.FirstOrDefaultAsync(c => c.Name == company.Name);
+            if (existcompany != null) { return StatusCode(StatusCodes.Status404NotFound, new Response { Status = "Error", Message = "Company with this name is already exist" }); }
             dbcompany.Name = company.Name;
             dbcompany.Description = company.Description;
             await _db.SaveChangesAsync();
             return Ok(company);
         }
         [HttpPost("CreateCompany")]
-        public async Task<IActionResult> CreateCategory(CompanyVM company)
+        public async Task<IActionResult> CreateCompany(CompanyVM company)
         {
             if (company == null)
             {

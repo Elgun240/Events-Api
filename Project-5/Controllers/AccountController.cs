@@ -217,13 +217,13 @@ namespace Project_5.Controllers
             if (identityResult.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, Roles.Member.ToString());
-                //await _signInManager.SignInAsync(newUser, true);
+              
                 await _db.SaveChangesAsync();
                 return StatusCode(StatusCodes.Status200OK, new Response { Status = "Success", Message = "Account created successfully" });
             }
             else
             {
-                // Обработка ошибок identityResult.Errors
+            
                 return BadRequest(new Response { Status = "Error", Message = "Failed to create user", Errors = identityResult.Errors.Select(e => e.Description).ToList() });
             }
 

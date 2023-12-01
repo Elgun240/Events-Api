@@ -76,6 +76,16 @@ namespace Project_5.Controllers
             }
             return Ok(alltickets);
         }
+        [HttpPost("TopUnBalance")]
+        public async Task<IActionResult> TopUpBalance(int balance)
+        {
+            var user =await _userManager.GetUserAsync(User);
+            user.Balance += balance;
+            await _db.SaveChangesAsync();
+            return StatusCode(StatusCodes.Status202Accepted, new Response { Status = "Done", Message = "Process done succesfully" });
+        }
+
+
        
     }
 }

@@ -68,6 +68,11 @@ namespace Project_5.Areas.Company.Controllers
             {
                 return StatusCode(StatusCodes.Status404NotFound, new Response { Status = "Error", Message = "Can;t find measure" });
             }
+            var existmeasure = _db.Measures.FirstOrDefault(m => m.Title == measure.Title);
+            if (existmeasure != null)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Measure with this name is already exist" });
+            }
             dbmeasure.Title = measure.Title;
             dbmeasure.Description = measure.Description;
             dbmeasure.Adress = measure.Adress;

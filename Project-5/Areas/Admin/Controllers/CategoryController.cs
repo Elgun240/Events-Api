@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Project_5.DAL;
 using Project_5.Models;
 using Project_5.ViewModel;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Project_5.Areas.Admin.Controllers
 {
@@ -47,6 +48,11 @@ namespace Project_5.Areas.Admin.Controllers
             {
                 return StatusCode(StatusCodes.Status404NotFound, new Response { Status = "Error", Message = "Id can not be null" });
             }
+            var existcategory = await _db.Cateogries.FirstOrDefaultAsync(c => c.Name == category.Name);
+            if (existcategory != null)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new Response { Status = "Error", Message = "Category with this name is already exist" });
+            }
             var dbcateogry = await _db.Cateogries.FirstOrDefaultAsync(m => m.Id == id);
             if (dbcateogry == null)
             {
@@ -63,10 +69,8 @@ namespace Project_5.Areas.Admin.Controllers
             {
                 return StatusCode(StatusCodes.Status404NotFound, new Response { Status = "Error", Message = "Category cant be null" });
             }
-            //if(!ModelState.IsValid)
-            //{
-            //    return StatusCode(StatusCodes.Status404NotFound, new Response { Status = "Error", Message = "Fill the fields" });
-            //}
+            var existcategory = await _db.Cateogries.FirstOrDefaultAsync(c => c.Name == category.Name);
+            if (existcategory != null) { return StatusCode(StatusCodes.Status404NotFound, new Response { Status = "Error", Message = "Category with this name is already exist" }); }
             Category newcategory = new Category()
             {
                 Name = category.Name,
