@@ -42,7 +42,7 @@ namespace Project_5.Controllers
             {
                 return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "YOu can send message only after ending measure" });
             }
-            Comment newcomment = new Comment()
+            Comment ncomment = new Comment()
             {
                 MeasureId = comment.MeasureId,
                 Title = comment.Title,
@@ -51,7 +51,7 @@ namespace Project_5.Controllers
                 CreateTime = DateTime.Now,
 
             };
-            await _db.Comments.AddAsync(newcomment);
+            await _db.Comments.AddAsync(ncomment);
             await _db.SaveChangesAsync();
 
             return StatusCode(StatusCodes.Status202Accepted, new Response { Status = "Sended", Message = "Comment was sent" });   
