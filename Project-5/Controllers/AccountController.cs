@@ -229,8 +229,8 @@ namespace Project_5.Controllers
 
           
         }
-         
-        private async Task<IActionResult> CreateRole()
+        [HttpPost("CreateRole")]
+        public async Task<IActionResult> CreateRole()
         {
             if (!(await _roleManager.RoleExistsAsync(Roles.Admin.ToString())))
             {
